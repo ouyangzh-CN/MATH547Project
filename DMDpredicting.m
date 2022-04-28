@@ -1,7 +1,8 @@
 clc,clear
 close all
 load("data.mat");
-X = data.mean;
+qwe = 30;
+X = data.mean(:,1:qwe);
 %Form DMD matrix
 % if ~exist('Output')
 %     Output = DMD(X.mean,[],.99);
@@ -28,7 +29,7 @@ for st = 1:nstacks
     Xaug = [Xaug; X(:, st:end-nstacks+st)];
 end
 
-for i_aug = 2:2
+for i_aug = 1:1
 %%% Compute DMD on Xaug (or X) %%% 
     if i_aug == 1
         Output = DMD(X,[],thresh);
@@ -141,9 +142,9 @@ for i_aug = 2:2
     tt = tt + 1970;
     for i = 1:length(PLOT)
         id = PLOT(i);
-        %PP(i,:) = plot(t,data.mean(id,:),'*',...
-        %    t,real(Xdmd(id,1:mm1)),'LineWidth',2,'Color',Color(i,:));
-        PP(i,:) = plot(tt(end-15:end),real(Xdmd(id,end-15:end)),'LineWidth',2,'Color',Color(i,:));
+        PP(i,:) = plot(t,data.mean(id,:),'*',...
+            t,real(Xdmd(id,1:mm1)),'LineWidth',2,'Color',Color(i,:));
+        %PP(i,:) = plot(tt(end-15:end),real(Xdmd(id,end-15:end)),'LineWidth',2,'Color',Color(i,:));
         hold on
         plot(tt(end-4:end),real(Xdmd(id,end-4:end)),'o',...
             'LineWidth',2,'Color',Color(i,:))
@@ -152,5 +153,6 @@ for i_aug = 2:2
         set(gca,'FontSize',12,'LineWidth',2)
         %plot(t,data.raw(id,:),'o')
     end
+    plot([qwe+1970,qwe+1970],[-1,2.5],'--','LineWidth',1.5,'Color',[0 0 0])
     legend(PP(:,1),{'Unite Kingdom','Canada','China','India','Sudan'})
 end
