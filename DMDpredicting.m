@@ -15,6 +15,12 @@ X = data.mean;
 thresh = 0.9;
 nstacks = 17; % number of stacks
 
+Color = [0 0.4470 0.7410;
+        0.8500 0.3250 0.0980;
+        0.9290 0.6940 0.1250;
+        0.4940 0.1840 0.5560;
+        0.4660 0.6740 0.1880;
+    ];
 % Construct the augmented, shift-stacked data matrices
 % This resolves DMD's issues with standing waves
 Xaug = [];
@@ -113,10 +119,12 @@ for i_aug = 2:2
     b = Phi\x1;
     % DMD reconstrcution
     mm1 = size(data.mean,2);
-    time_dynamics = zeros(Output.DMD.r,mm1);
+    tt = 0:50-1;
+    mm2 = size(tt,2);
+    time_dynamics = zeros(Output.DMD.r,mm2);
     t = (0:mm1-1)*dt;
-    for iter = 1:mm1
-        time_dynamics(:,iter) = (b.*exp(omega*t(iter)));
+    for iter = 1:mm2
+        time_dynamics(:,iter) = (b.*exp(omega*tt(iter)));
     end
     Xdmd = Phi*time_dynamics;
     %plot(t,Xdmd(1:10,:),t,X(1:10,:));
@@ -129,10 +137,19 @@ for i_aug = 2:2
     end
     
     figure
+    t = t + 1970;
+    tt = tt + 1970;
     for i = 1:length(PLOT)
         id = PLOT(i);
-        PP(i,:) = plot(t,data.mean(id,:),'*',t,Xdmd(id,:),'LineWidth',2);
+        %PP(i,:) = plot(t,data.mean(id,:),'*',...
+        %    t,real(Xdmd(id,1:mm1)),'LineWidth',2,'Color',Color(i,:));
+        PP(i,:) = plot(tt(end-15:end),real(Xdmd(id,end-15:end)),'LineWidth',2,'Color',Color(i,:));
         hold on
+        plot(tt(end-4:end),real(Xdmd(id,end-4:end)),'o',...
+            'LineWidth',2,'Color',Color(i,:))
+        
+        xlabel('year'),ylabel('mean education rate')
+        set(gca,'FontSize',12,'LineWidth',2)
         %plot(t,data.raw(id,:),'o')
     end
     legend(PP(:,1),{'Unite Kingdom','Canada','China','India','Sudan'})
