@@ -27,14 +27,18 @@ treeCluster = linkage(disMatrix,'ward');
 % 聚类下标
 % idx = cluster(treeCluster,'maxclust',5); %划分聚类为5类
 figure(9)
+for g=3:6
+    subplot(2,2,g-2)
+    g_void=clustering(g,treeCluster,W,name_m1);
+end
+
+figure(12)
 scatter3(0,0,0,'k');
 hold on
-title('Clustering by fitting parameters');
-% xlabel('k'); 
-% ylabel('b');
-xlabel('p10/slope of year'); 
-ylabel('p01/slope of age group');
-zlabel('p00/intersect@1970@15to24');
+title('Clustering');
+xlabel('slope of year'); 
+ylabel('slope of age group');
+zlabel('intersect in 1970 of 15 to 24 group');
 idx_c = cluster(treeCluster,'maxclust',5);%给PCA后的点分类
 
 X=(W(:, 2)-min(W(:, 2)))./(max(W(:, 2))-min(W(:, 2)));
@@ -79,7 +83,8 @@ end
 hold off
 
 
-%%
+%% 洲
+%{
 figure(3)
 scatter3(0,0,0,'k');
 % axis equal
@@ -103,6 +108,7 @@ for i = 1:217
     else idx(i)=7;
     end 
 end
+
 for i = 1:217
    switch(idx(i))
        case 1
@@ -130,4 +136,4 @@ for i = 1:217
    end
 end
 hold off
-
+%}
