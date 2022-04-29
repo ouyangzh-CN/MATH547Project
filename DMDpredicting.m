@@ -120,7 +120,7 @@ for i_aug = 1:1
     b = Phi\x1;
     % DMD reconstrcution
     mm1 = size(data.mean,2);
-    tt = 0:50-1;
+    tt = 0:50;
     mm2 = size(tt,2);
     time_dynamics = zeros(Output.DMD.r,mm2);
     t = (0:mm1-1)*dt;
@@ -137,14 +137,15 @@ for i_aug = 1:1
         PLOT(i) = candi;
     end
     
+    Xdmd = Xdmd.*data.sig+data.mu;
     figure
     t = t + 1970;
     tt = tt + 1970;
     for i = 1:length(PLOT)
         id = PLOT(i);
-        PP(i,:) = plot(t,data.mean(id,:),'*',...
-            t,real(Xdmd(id,1:mm1)),'LineWidth',2,'Color',Color(i,:));
-        %PP(i,:) = plot(tt(end-15:end),real(Xdmd(id,end-15:end)),'LineWidth',2,'Color',Color(i,:));
+        %PP(i,:) = plot(t,data.raw(id,:),'*',...
+        %    t,real(Xdmd(id,1:mm1)),'LineWidth',2,'Color',Color(i,:));
+        PP(i,:) = plot(tt(end-16:end),real(Xdmd(id,end-16:end)),'LineWidth',2,'Color',Color(i,:));
         hold on
         plot(tt(end-4:end),real(Xdmd(id,end-4:end)),'o',...
             'LineWidth',2,'Color',Color(i,:))
@@ -153,6 +154,6 @@ for i_aug = 1:1
         set(gca,'FontSize',12,'LineWidth',2)
         %plot(t,data.raw(id,:),'o')
     end
-    plot([qwe+1970,qwe+1970],[-1,2.5],'--','LineWidth',1.5,'Color',[0 0 0])
+    %plot([qwe+1970,qwe+1970],[-1,2.5],'--','LineWidth',1.5,'Color',[0 0 0])
     legend(PP(:,1),{'Unite Kingdom','Canada','China','India','Sudan'})
 end

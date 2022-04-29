@@ -3,6 +3,8 @@ clc,clear%raw = xlsread('IHME_GLOBAL_EDUCATIONAL_ATTAINMENT_1970_2015_Y2015M04D2
 load('raw.mat');
 raw_ = raw;
 raw(:,5) = zscore(raw(:,5));
+X.mu = mean(raw_(:,5));
+X.sig = std(raw_(:,5));
 X.loc = [];
 X.age = [];
 X.mean = [];

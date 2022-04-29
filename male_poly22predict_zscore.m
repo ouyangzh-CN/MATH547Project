@@ -73,7 +73,7 @@ year_6=[1970:2015 1970:2015 1970:2015 1970:2015 1970:2015 1970:2015];
 year=zscore(year_6);
 year_p=[0 0.0752 0.0752*2 0.0752*3 0.0752*4 0.0752*5]+[1.6917 1.6917 1.6917 1.6917 1.6917 1.6917];%zscore后的2016-2020
 
-figure(15)
+figure(2)
 hold on
 
 xlabel('year'),ylabel('mean education years')
@@ -101,14 +101,14 @@ for t=1:5
     mean_predi1_p(t,:)=mean_pred1_p(t,:)*mean_std(idxp(t))+mean_mean(idxp(t));
     mean_predi2_p(t,:)=mean_pred2_p(t,:)*mean_std(idxp(t))+mean_mean(idxp(t));
 %     plot(year_i,mean_predi1(t,:),'k-');
-    plot(2004:2015,mean_predi2(t,35:46),'LineWidth',2,'Color',Color(t,:));
-    PP(t,:) = plot(2015:2020,mean_predi2_p(t,:),'LineWidth',2,'Color',Color(t,:));
+    plot(2004:2015,mean_predi2(t,35:46),'-.','LineWidth',2,'Color',Color(t,:));
+    PP(t,:) = plot(2015:2020,mean_predi2_p(t,:),'-.','LineWidth',2,'Color',Color(t,:));
 
     mean_org1(t,:)=mean_m(idxmt1(t,:));
     mean_org2(t,:)=mean_m(idxmt2(t,:));
 %     plot(year_i,mean_org1(t,:),'or');
 %     plot(2004:2015,mean_org2(t,35:46),'o','LineWidth',1,'Color',Color(t,:),'MarkerFaceColor',Color(t,:));
-    plot(2016:2020,mean_predi2_p(t,2:6),'o','LineWidth',2,'Color',Color(t,:));
+    plot(2016:2020,mean_predi2_p(t,2:6),'+','LineWidth',2,'Color',Color(t,:));
     
 end
 legend(PP(:,1),{'Unite Kingdom','Canada','China','India','Sudan'})
